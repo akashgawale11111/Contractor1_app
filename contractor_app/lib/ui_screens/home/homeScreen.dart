@@ -159,280 +159,272 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
 
-    return WillPopScope(
-      onWillPop: _onWillPop,
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            loc.home,
-            style: const TextStyle(fontFamily: 'Source Sans 3'),
-          ),
-          centerTitle: true,
-          automaticallyImplyLeading: false,
-          leading: Builder(
-            builder:
-                (BuildContext context) => IconButton(
-                  icon: const Icon(Icons.menu),
-                  onPressed: () {
-                    Scaffold.of(context).openDrawer();
-                  },
-                ),
-          ),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          loc.home,
+          style: const TextStyle(fontFamily: 'Source Sans 3'),
         ),
-        bottomNavigationBar: Navbar(),
-        drawer: Drawer(
-          child: ListView(
-            padding: EdgeInsets.zero,
-            children: [
-              DrawerHeader(
-                decoration: const BoxDecoration(color: Color(0xFFE85426)),
-                child: Text(
-                  loc.menu,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: width * 0.055,
-                    fontFamily: 'Source Sans 3',
-                  ),
-                ),
-              ),
-              ListTile(
-                leading: const Icon(Icons.calendar_today),
-                title: Text(
-                  '${loc.attendanceCalendar} >',
-                  style: const TextStyle(fontFamily: 'Source Sans 3'),
-                ),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const AttendenceCal(),
-                    ),
-                  );
+        centerTitle: true,
+        automaticallyImplyLeading: false,
+        leading: Builder(
+          builder:
+              (BuildContext context) => IconButton(
+                icon: const Icon(Icons.menu),
+                onPressed: () {
+                  Scaffold.of(context).openDrawer();
                 },
               ),
-              ListTile(
-                leading: const Icon(Icons.payment),
-                title: Text(
-                  '${loc.paymentHistory} >',
-                  style: const TextStyle(fontFamily: 'Source Sans 3'),
-                ),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const PaymentHistory(),
-                    ),
-                  );
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.edit_calendar),
-                title: Text(
-                  '${loc.attendanceHistory}   >',
-                  style: const TextStyle(fontFamily: 'Source Sans 3'),
-                ),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const Attendence_History(),
-                    ),
-                  );
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.language),
-                title: Text(
-                  loc.selectLanguage,
-                  style: const TextStyle(fontFamily: 'Source Sans 3'),
-                ),
-                trailing: DropdownButton<String>(
-                  value: getLanguageFromCode(currentLocaleCode),
-                  items:
-                      languages
-                          .map(
-                            (lang) => DropdownMenuItem<String>(
-                              value: lang,
-                              child: Text(lang),
-                            ),
-                          )
-                          .toList(),
-                  onChanged: (value) {
-                    if (value != null) {
-                      final languageCode = languageMap[value] ?? 'en';
-                      ref
-                          .read(localeProvider.notifier)
-                          .setLocale(Locale(languageCode));
-                    }
-                  },
-                ),
-              ),
-              SizedBox(height: height * 0.4),
-              ListTile(
-                leading: const Icon(Icons.settings),
-                title: Text(
-                  '${loc.settings}   >',
-                  style: const TextStyle(fontFamily: 'Source Sans 3'),
-                ),
-                onTap: () {
-                  showLogoutPopup(context);
-                },
-              ),
-              SizedBox(height: height * 0.006),
-              ListTile(
-                leading: const Icon(Icons.logout),
-                title: Text(
-                  '${loc.logout}   >',
-                  style: const TextStyle(fontFamily: 'Source Sans 3'),
-                ),
-                onTap: () {
-                  showLogoutPopup(context);
-                },
-              ),
-            ],
-          ),
         ),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.only(
-              top: height * 0.025,
-              left: width * 0.032,
-              right: width * 0.032,
+      ),
+      // bottomNavigationBar: Navbar(),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            DrawerHeader(
+              decoration: const BoxDecoration(color: Color(0xFFE85426)),
+              child: Text(
+                loc.menu,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: width * 0.055,
+                  fontFamily: 'Source Sans 3',
+                ),
+              ),
             ),
-            child: Column(
-              children: List.generate(10, (index) {
-                return Container(
-                  margin: EdgeInsets.only(bottom: height * 0.02),
-                  child: Card(
-                    elevation: 4,
-                    child: Padding(
-                      padding: EdgeInsets.all(width * 0.028),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Image.asset(
-                            'assets/images/Elevation1.png',
-                            width: width * 0.25,
-                            height: height * 0.16,
-                            fit: BoxFit.cover,
-                          ),
-                          SizedBox(width: width * 0.035),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  loc.projectTitle,
-                                  style: TextStyle(
-                                    fontSize: width * 0.037,
-                                    fontWeight: FontWeight.bold,
-                                    color: const Color(0xFFE85426),
-                                    fontFamily: 'Source Sans 3',
-                                  ),
-                                ),
-                                SizedBox(height: height * 0.01),
-                                Text(
-                                  loc.projectAddress,
-                                  style: TextStyle(
-                                    fontSize: width * 0.029,
-                                    color: Colors.black54,
-                                    fontFamily: 'Source Sans 3',
-                                  ),
-                                ),
-                                SizedBox(height: height * 0.012),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    ElevatedButton(
-                                      onPressed:
-                                          _isPunchedIn
-                                              ? null
-                                              : () {
-                                                setState(() {
-                                                  _isPunchedIn = true;
-                                                  _isPunchedOut = false;
-                                                });
-
-                                                Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder:
-                                                        (context) =>
-                                                            const PermissionScreen(),
-                                                  ),
-                                                );
-                                              },
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor:
-                                            _isPunchedIn
-                                                ? Colors.grey
-                                                : const Color(0xFFE85426),
-                                        padding: EdgeInsets.symmetric(
-                                          horizontal: width * 0.05,
-                                          vertical: height * 0.012,
-                                        ),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(
-                                            8,
-                                          ),
-                                        ),
-                                      ),
-                                      child: Text(
-                                        loc.punchIn,
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontFamily: 'Source Sans 3',
-                                          fontSize: width * 0.032,
-                                        ),
-                                      ),
-                                    ),
-                                    ElevatedButton(
-                                      onPressed:
-                                          _isPunchedIn && !_isPunchedOut
-                                              ? () {
-                                                setState(() {
-                                                  _isPunchedOut = true;
-                                                  _isPunchedIn = false;
-                                                });
-                                              }
-                                              : null,
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor:
-                                            _isPunchedOut
-                                                ? Colors.grey
-                                                : const Color(0xFFE85426),
-                                        padding: EdgeInsets.symmetric(
-                                          horizontal: width * 0.05,
-                                          vertical: height * 0.012,
-                                        ),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(
-                                            8,
-                                          ),
-                                        ),
-                                      ),
-                                      child: Text(
-                                        loc.punchOut,
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontFamily: 'Source Sans 3',
-                                          fontSize: width * 0.032,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+            ListTile(
+              leading: const Icon(Icons.calendar_today),
+              title: Text(
+                '${loc.attendanceCalendar} >',
+                style: const TextStyle(fontFamily: 'Source Sans 3'),
+              ),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const AttendenceCal(),
                   ),
                 );
-              }),
+              },
             ),
+            ListTile(
+              leading: const Icon(Icons.payment),
+              title: Text(
+                '${loc.paymentHistory} >',
+                style: const TextStyle(fontFamily: 'Source Sans 3'),
+              ),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const PaymentHistory(),
+                  ),
+                );
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.edit_calendar),
+              title: Text(
+                '${loc.attendanceHistory}   >',
+                style: const TextStyle(fontFamily: 'Source Sans 3'),
+              ),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const Attendence_History(),
+                  ),
+                );
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.language),
+              title: Text(
+                loc.selectLanguage,
+                style: const TextStyle(fontFamily: 'Source Sans 3'),
+              ),
+              trailing: DropdownButton<String>(
+                value: getLanguageFromCode(currentLocaleCode),
+                items:
+                    languages
+                        .map(
+                          (lang) => DropdownMenuItem<String>(
+                            value: lang,
+                            child: Text(lang),
+                          ),
+                        )
+                        .toList(),
+                onChanged: (value) {
+                  if (value != null) {
+                    final languageCode = languageMap[value] ?? 'en';
+                    ref
+                        .read(localeProvider.notifier)
+                        .setLocale(Locale(languageCode));
+                  }
+                },
+              ),
+            ),
+            SizedBox(height: height * 0.4),
+            ListTile(
+              leading: const Icon(Icons.settings),
+              title: Text(
+                '${loc.settings}   >',
+                style: const TextStyle(fontFamily: 'Source Sans 3'),
+              ),
+              onTap: () {
+                showLogoutPopup(context);
+              },
+            ),
+            SizedBox(height: height * 0.006),
+            ListTile(
+              leading: const Icon(Icons.logout),
+              title: Text(
+                '${loc.logout}   >',
+                style: const TextStyle(fontFamily: 'Source Sans 3'),
+              ),
+              onTap: () {
+                showLogoutPopup(context);
+              },
+            ),
+          ],
+        ),
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.only(
+            top: height * 0.025,
+            left: width * 0.032,
+            right: width * 0.032,
+          ),
+          child: Column(
+            children: List.generate(10, (index) {
+              return Container(
+                margin: EdgeInsets.only(bottom: height * 0.02),
+                child: Card(
+                  elevation: 4,
+                  child: Padding(
+                    padding: EdgeInsets.all(width * 0.028),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Image.asset(
+                          'assets/images/Elevation1.png',
+                          width: width * 0.25,
+                          height: height * 0.16,
+                          fit: BoxFit.cover,
+                        ),
+                        SizedBox(width: width * 0.035),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                loc.projectTitle,
+                                style: TextStyle(
+                                  fontSize: width * 0.037,
+                                  fontWeight: FontWeight.bold,
+                                  color: const Color(0xFFE85426),
+                                  fontFamily: 'Source Sans 3',
+                                ),
+                              ),
+                              SizedBox(height: height * 0.01),
+                              Text(
+                                loc.projectAddress,
+                                style: TextStyle(
+                                  fontSize: width * 0.029,
+                                  color: Colors.black54,
+                                  fontFamily: 'Source Sans 3',
+                                ),
+                              ),
+                              SizedBox(height: height * 0.012),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  ElevatedButton(
+                                    onPressed:
+                                        _isPunchedIn
+                                            ? null
+                                            : () {
+                                              setState(() {
+                                                _isPunchedIn = true;
+                                                _isPunchedOut = false;
+                                              });
+        
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder:
+                                                      (context) =>
+                                                          const PermissionScreen(),
+                                                ),
+                                              );
+                                            },
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor:
+                                          _isPunchedIn
+                                              ? Colors.grey
+                                              : const Color(0xFFE85426),
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal: width * 0.05,
+                                        vertical: height * 0.012,
+                                      ),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                    ),
+                                    child: Text(
+                                      loc.punchIn,
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontFamily: 'Source Sans 3',
+                                        fontSize: width * 0.032,
+                                      ),
+                                    ),
+                                  ),
+                                  ElevatedButton(
+                                    onPressed:
+                                        _isPunchedIn && !_isPunchedOut
+                                            ? () {
+                                              setState(() {
+                                                _isPunchedOut = true;
+                                                _isPunchedIn = false;
+                                              });
+                                            }
+                                            : null,
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor:
+                                          _isPunchedOut
+                                              ? Colors.grey
+                                              : const Color(0xFFE85426),
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal: width * 0.05,
+                                        vertical: height * 0.012,
+                                      ),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                    ),
+                                    child: Text(
+                                      loc.punchOut,
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontFamily: 'Source Sans 3',
+                                        fontSize: width * 0.032,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              );
+            }),
           ),
         ),
       ),
