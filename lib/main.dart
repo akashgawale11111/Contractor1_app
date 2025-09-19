@@ -23,6 +23,7 @@ class MyApp extends ConsumerWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Contractor App',
+      // language
       locale: locale,
       supportedLocales: const [
         Locale('en'),
