@@ -3,8 +3,8 @@ import 'package:contractor_app/theme/attendance_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class AttendanceScreen extends ConsumerWidget {
-  const AttendanceScreen({super.key});
+class AttendanceScreen1 extends ConsumerWidget {
+  const AttendanceScreen1({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -21,9 +21,7 @@ class AttendanceScreen extends ConsumerWidget {
     });
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Location Attendance'),
-      ),
+      appBar: AppBar(title: const Text('Location Attendance')),
       drawer: const AppDrawer(), // Add the drawer here
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -34,17 +32,27 @@ class AttendanceScreen extends ConsumerWidget {
             if (attendanceState.isLoading)
               const CircularProgressIndicator()
             else ...[
-              const Text('Location:',
-                  style: TextStyle(fontWeight: FontWeight.bold)),
-              Text(attendanceState.location, style: const TextStyle(fontSize: 16)),
+              const Text(
+                'Location:',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              Text(
+                attendanceState.location,
+                style: const TextStyle(fontSize: 16),
+              ),
               const SizedBox(height: 20),
-              const Text('Time:',
-                  style: TextStyle(fontWeight: FontWeight.bold)),
+              const Text(
+                'Time:',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
               Text(attendanceState.time, style: const TextStyle(fontSize: 16)),
               const SizedBox(height: 20),
               Center(
                 child: ElevatedButton(
-                  onPressed: attendanceState.isLoading ? null : attendanceNotifier.markAttendance,
+                  onPressed:
+                      attendanceState.isLoading
+                          ? null
+                          : attendanceNotifier.markAttendance,
                   child: const Text('Mark Attendance'),
                 ),
               ),

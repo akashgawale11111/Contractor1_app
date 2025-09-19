@@ -82,9 +82,7 @@ class _NavbarState extends State<Navbar2> {
                         setState(() => selectedIndex = 1);
                         Navigator.push(
                           context,
-                          MaterialPageRoute(
-                            builder: (context) => ProfilePage(),
-                          ),
+                          MaterialPageRoute(builder: (context) => Profile()),
                         );
                       },
                       child: Column(

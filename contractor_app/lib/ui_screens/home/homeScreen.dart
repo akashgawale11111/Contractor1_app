@@ -4,6 +4,8 @@ import 'package:contractor_app/language/lib/l10n/app_localizations.dart';
 import 'package:contractor_app/language/lib/l10n/language_provider.dart';
 import 'package:contractor_app/ui_screens/authentication/login/loginscreen.dart';
 import 'package:contractor_app/ui_screens/home/face_detection.dart/face_detection.dart';
+import 'package:contractor_app/ui_screens/home/map_screen/map2.dart';
+import 'package:contractor_app/ui_screens/home/map_screen/map_screen.dart';
 import 'package:contractor_app/ui_screens/menu_screens/attendance_calendar.dart';
 import 'package:contractor_app/ui_screens/menu_screens/attendance_history.dart';
 import 'package:contractor_app/ui_screens/menu_screens/navbar.dart';
@@ -14,6 +16,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 // Logout popup function (localized)
 void showLogoutPopup(BuildContext context) {
   final loc = AppLocalizations.of(context);
+  final width = MediaQuery.of(context).size.width;
+  final height = MediaQuery.of(context).size.height;
+
   showDialog(
     context: context,
     builder: (BuildContext context) {
@@ -36,9 +41,9 @@ void showLogoutPopup(BuildContext context) {
               Text(
                 loc.logoutConfirm,
                 textAlign: TextAlign.center,
-                style: const TextStyle(
+                style: TextStyle(
                   fontFamily: 'Source Sans 3',
-                  fontSize: 16,
+                  fontSize: width * 0.036, // font size thoda chhota
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -52,9 +57,9 @@ void showLogoutPopup(BuildContext context) {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
                       ),
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 30,
-                        vertical: 12,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: width * 0.06, // kam kiya
+                        vertical: height * 0.014,
                       ),
                     ),
                     onPressed: () {
@@ -62,9 +67,9 @@ void showLogoutPopup(BuildContext context) {
                     },
                     child: Text(
                       loc.cancel,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontFamily: 'Source Sans 3',
-                        fontSize: 16,
+                        fontSize: width * 0.035,
                         color: Colors.black,
                       ),
                     ),
@@ -75,9 +80,9 @@ void showLogoutPopup(BuildContext context) {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
                       ),
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 30,
-                        vertical: 12,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: width * 0.06, // kam kiya
+                        vertical: height * 0.014,
                       ),
                     ),
                     onPressed: () {
@@ -91,9 +96,9 @@ void showLogoutPopup(BuildContext context) {
                     },
                     child: Text(
                       loc.logout,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontFamily: 'Source Sans 3',
-                        fontSize: 16,
+                        fontSize: width * 0.035,
                         color: Colors.white,
                       ),
                     ),
@@ -109,7 +114,6 @@ void showLogoutPopup(BuildContext context) {
 }
 
 class HomeScreen extends ConsumerStatefulWidget {
-  // Keep existing parameters for compatibility, but they will be ignored
   final String selectedLanguageCode;
   final Function(String) onLanguageChanged;
 
@@ -129,7 +133,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   bool _isPunchedIn = false;
   bool _isPunchedOut = false;
 
-  // Language display names and their corresponding codes
   final Map<String, String> languageMap = const {
     'English': 'en',
     'Marathi': 'mr',
@@ -156,6 +159,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   Widget build(BuildContext context) {
     final loc = AppLocalizations.of(context);
     final currentLocaleCode = ref.watch(localeProvider).languageCode;
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
 
     return WillPopScope(
       onWillPop: _onWillPop,
@@ -186,9 +191,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 decoration: const BoxDecoration(color: Color(0xFFE85426)),
                 child: Text(
                   loc.menu,
-                  style: const TextStyle(
+                  style: TextStyle(
                     color: Colors.white,
-                    fontSize: 24,
+                    fontSize: width * 0.055,
                     fontFamily: 'Source Sans 3',
                   ),
                 ),
@@ -206,7 +211,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       builder: (context) => const AttendenceCal(),
                     ),
                   );
-                  // Navigate to attendance calendar
                 },
               ),
               ListTile(
@@ -222,7 +226,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       builder: (context) => const PaymentHistory(),
                     ),
                   );
-                  // Navigate to payment history
                 },
               ),
               ListTile(
@@ -238,7 +241,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       builder: (context) => const Attendence_History(),
                     ),
                   );
-                  // Navigate to attendance history
                 },
               ),
               ListTile(
@@ -268,7 +270,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   },
                 ),
               ),
-              const SizedBox(height: 350),
+              SizedBox(height: height * 0.4),
               ListTile(
                 leading: const Icon(Icons.settings),
                 title: Text(
@@ -279,7 +281,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   showLogoutPopup(context);
                 },
               ),
-              const SizedBox(height: 5),
+              SizedBox(height: height * 0.006),
               ListTile(
                 leading: const Icon(Icons.logout),
                 title: Text(
@@ -288,12 +290,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 ),
                 onTap: () {
                   showLogoutPopup(context);
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //     builder: (context) => const LoginScreen(),
-                  //   ),
-                  // );
                 },
               ),
             ],
@@ -301,49 +297,55 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         ),
         body: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.only(top: 20, left: 12, right: 12),
+            padding: EdgeInsets.only(
+              top: height * 0.025,
+              left: width * 0.032,
+              right: width * 0.032,
+            ),
             child: Column(
               children: List.generate(10, (index) {
                 return Container(
-                  margin: const EdgeInsets.only(bottom: 16),
+                  margin: EdgeInsets.only(bottom: height * 0.02),
                   child: Card(
                     elevation: 4,
                     child: Padding(
-                      padding: const EdgeInsets.all(12.0),
+                      padding: EdgeInsets.all(width * 0.028),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Image.asset(
                             'assets/images/Elevation1.png',
-                            width: 100,
-                            height: 130,
+                            width: width * 0.25,
+                            height: height * 0.16,
                             fit: BoxFit.cover,
                           ),
-                          const SizedBox(width: 16),
+                          SizedBox(width: width * 0.035),
                           Expanded(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
                                   loc.projectTitle,
-                                  style: const TextStyle(
-                                    fontSize: 16,
+                                  style: TextStyle(
+                                    fontSize: width * 0.037,
                                     fontWeight: FontWeight.bold,
-                                    color: Color(0xFFE85426),
+                                    color: const Color(0xFFE85426),
                                     fontFamily: 'Source Sans 3',
                                   ),
                                 ),
-                                const SizedBox(height: 8),
+                                SizedBox(height: height * 0.01),
                                 Text(
                                   loc.projectAddress,
-                                  style: const TextStyle(
-                                    fontSize: 12,
+                                  style: TextStyle(
+                                    fontSize: width * 0.029,
                                     color: Colors.black54,
                                     fontFamily: 'Source Sans 3',
                                   ),
                                 ),
-                                const SizedBox(height: 12),
+                                SizedBox(height: height * 0.012),
                                 Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     ElevatedButton(
                                       onPressed:
@@ -354,20 +356,25 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                                   _isPunchedIn = true;
                                                   _isPunchedOut = false;
                                                 });
-                                                // Navigator.push(
-                                                //   context,
-                                                //   MaterialPageRoute(
-                                                //     builder: (context) => FaceVerificationScreen(
-                                                //       punchInTime: DateTime.now(),
-                                                //     ),
-                                                //   ),
-                                                // );
+
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder:
+                                                        (context) =>
+                                                            const PermissionScreen(),
+                                                  ),
+                                                );
                                               },
                                       style: ElevatedButton.styleFrom(
                                         backgroundColor:
                                             _isPunchedIn
                                                 ? Colors.grey
                                                 : const Color(0xFFE85426),
+                                        padding: EdgeInsets.symmetric(
+                                          horizontal: width * 0.05,
+                                          vertical: height * 0.012,
+                                        ),
                                         shape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.circular(
                                             8,
@@ -376,13 +383,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                       ),
                                       child: Text(
                                         loc.punchIn,
-                                        style: const TextStyle(
+                                        style: TextStyle(
                                           color: Colors.white,
                                           fontFamily: 'Source Sans 3',
+                                          fontSize: width * 0.032,
                                         ),
                                       ),
                                     ),
-                                    const SizedBox(width: 10),
                                     ElevatedButton(
                                       onPressed:
                                           _isPunchedIn && !_isPunchedOut
@@ -398,6 +405,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                             _isPunchedOut
                                                 ? Colors.grey
                                                 : const Color(0xFFE85426),
+                                        padding: EdgeInsets.symmetric(
+                                          horizontal: width * 0.05,
+                                          vertical: height * 0.012,
+                                        ),
                                         shape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.circular(
                                             8,
@@ -406,9 +417,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                       ),
                                       child: Text(
                                         loc.punchOut,
-                                        style: const TextStyle(
+                                        style: TextStyle(
                                           color: Colors.white,
                                           fontFamily: 'Source Sans 3',
+                                          fontSize: width * 0.032,
                                         ),
                                       ),
                                     ),
