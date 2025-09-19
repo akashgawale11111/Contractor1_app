@@ -9,17 +9,21 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class FaceVerificationScreen extends HookConsumerWidget { // Change to HookConsumerWidget
+class FaceVerificationScreen extends HookConsumerWidget {
+  // Change to HookConsumerWidget
   const FaceVerificationScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) { // Add WidgetRef
+  Widget build(BuildContext context, WidgetRef ref) {
+    // Add WidgetRef
     final cameraController = useState<CameraController?>(null);
     final isInitializing = useState(true);
     final isProcessing = useState(false);
     final cameras = useState<List<CameraDescription>>([]);
     final selectedCameraIndex = useState(0);
-    final faceVerificationService = useMemoized(() => FaceVerificationService());
+    final faceVerificationService = useMemoized(
+      () => FaceVerificationService(),
+    );
 
     // Process image from device storage
     Future<void> processStorageImage(bool mounted) async {
@@ -48,7 +52,9 @@ class FaceVerificationScreen extends HookConsumerWidget { // Change to HookConsu
           Navigator.pop(context, true);
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Face verification from storage failed.')),
+            const SnackBar(
+              content: Text('Face verification from storage failed.'),
+            ),
           );
         }
       } catch (e, stackTrace) {
@@ -71,8 +77,11 @@ class FaceVerificationScreen extends HookConsumerWidget { // Change to HookConsu
           }
           cameras.value = availableCams;
 
-          final frontCameraIndex = availableCams.indexWhere((c) => c.lensDirection == CameraLensDirection.front);
-          selectedCameraIndex.value = (frontCameraIndex != -1) ? frontCameraIndex : 0;
+          final frontCameraIndex = availableCams.indexWhere(
+            (c) => c.lensDirection == CameraLensDirection.front,
+          );
+          selectedCameraIndex.value =
+              (frontCameraIndex != -1) ? frontCameraIndex : 0;
 
           final controller = CameraController(
             cameras.value[selectedCameraIndex.value],
@@ -82,12 +91,11 @@ class FaceVerificationScreen extends HookConsumerWidget { // Change to HookConsu
           );
 
           await controller.initialize();
-          
+
           if (isMounted) {
             debugPrint('Camera initialized successfully');
             cameraController.value = controller;
             isInitializing.value = false;
-
           }
         } catch (e, stackTrace) {
           debugPrint('Error initializing camera: $e');
@@ -172,26 +180,37 @@ class FaceVerificationScreen extends HookConsumerWidget { // Change to HookConsu
         if (isVerified) {
           showDialog(
             context: context,
-            builder: (context) => AlertDialog(
-              title: const Text('Punch Out Successful'),
-              content: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Image.memory(imageBytes, height: 150, width: 150, fit: BoxFit.cover),
-                  const SizedBox(height: 16),
-                  const Text('Name: Ramesh Kumar'),
-                  const Text('Address: Nashik, Maharashtra'),
-                  const SizedBox(height: 8),
-                  Text('Time: ${DateTime.now().toLocal().toString().substring(0, 16)}'),
-                ],
-              ),
-              actions: [
-                TextButton(
-                  onPressed: () => Navigator.of(context).popUntil((route) => route.isFirst),
-                  child: const Text('OK'),
+            builder:
+                (context) => AlertDialog(
+                  title: const Text('Punch Out Successful'),
+                  content: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Image.memory(
+                        imageBytes,
+                        height: 150,
+                        width: 150,
+                        fit: BoxFit.cover,
+                      ),
+                      const SizedBox(height: 16),
+                      const Text('Name: Ramesh Kumar'),
+                      const Text('Address: Nashik, Maharashtra'),
+                      const SizedBox(height: 8),
+                      Text(
+                        'Time: ${DateTime.now().toLocal().toString().substring(0, 16)}',
+                      ),
+                    ],
+                  ),
+                  actions: [
+                    TextButton(
+                      onPressed:
+                          () => Navigator.of(
+                            context,
+                          ).popUntil((route) => route.isFirst),
+                      child: const Text('OK'),
+                    ),
+                  ],
                 ),
-              ],
-            ),
           );
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -230,7 +249,9 @@ class FaceVerificationScreen extends HookConsumerWidget { // Change to HookConsu
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.white)),
+                    CircularProgressIndicator(
+                      valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                    ),
                     SizedBox(height: 16),
                     Text(
                       'Verifying face...',
@@ -288,10 +309,15 @@ class FaceVerificationScreen extends HookConsumerWidget { // Change to HookConsu
                     child: const Icon(Icons.camera_alt),
                   ),
                   const SizedBox(height: 20),
-                  ElevatedButton.icon(onPressed: () => processStorageImage(context.mounted), icon: const Icon(Icons.image), label: const Text('Pick from Gallery')),
+                  ElevatedButton.icon(
+                    onPressed: () => processStorageImage(context.mounted),
+                    icon: const Icon(Icons.image),
+                    label: const Text('Pick from Gallery'),
+                  ),
                 ],
               ),
-            )),
+            ),
+          ),
         ],
       ),
     );

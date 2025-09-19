@@ -6,7 +6,7 @@ class AppTheme {
     brightness: Brightness.light,
     scaffoldBackgroundColor: Colors.grey[100],
     appBarTheme: AppBarTheme(
-      backgroundColor: Colors.white,
+      backgroundColor: Color(0xFFE85426),
       elevation: 1,
       titleTextStyle: GoogleFonts.poppins(
         color: Colors.white,
@@ -17,8 +17,8 @@ class AppTheme {
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        backgroundColor:  Colors.white,
-        foregroundColor:  Color.fromARGB(255, 66, 32, 32),
+        backgroundColor: Colors.white,
+        foregroundColor: Color.fromARGB(255, 66, 32, 32),
       ),
     ),
     textTheme: GoogleFonts.poppinsTextTheme(),

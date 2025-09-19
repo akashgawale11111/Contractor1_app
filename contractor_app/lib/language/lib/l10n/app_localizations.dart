@@ -26,6 +26,11 @@ class AppLocalizations {
       'punchOut': 'Punch Out',
       'selectLanguage': 'Select Language',
       'cancel': 'Cancel',
+      'menu': 'Menu',
+      'attendanceCalendar': 'Attendance Calendar',
+      'attendanceHistory': 'Attendance History',
+      'settings': 'Settings',
+      'logoutConfirm': 'Are you sure you want to log out of your account?',
     },
     'hi': {
       'title': 'सरल भाषा ऐप',
@@ -41,6 +46,11 @@ class AppLocalizations {
       'punchOut': 'पंच आउट',
       'selectLanguage': 'भाषा चुनें',
       'cancel': 'रद्द करें',
+      'menu': 'मेनू',
+      'attendanceCalendar': 'उपस्थिति कैलेंडर',
+      'attendanceHistory': 'उपस्थिति इतिहास',
+      'settings': 'सेटिंग्स',
+      'logoutConfirm': 'क्या आप वाकई अपने खाते से लॉग आउट करना चाहते हैं?',
     },
     'mr': {
       'title': 'सोपे भाषा अ‍ॅप',
@@ -56,6 +66,11 @@ class AppLocalizations {
       'punchOut': 'पंच आउट',
       'selectLanguage': 'भाषा निवडा',
       'cancel': 'रद्द करा',
+      'menu': 'मेनू',
+      'attendanceCalendar': 'हजेरी दिनदर्शिका',
+      'attendanceHistory': 'हजेरी इतिहास',
+      'settings': 'सेटिंग्ज',
+      'logoutConfirm': 'आपण खात्यातून लॉग आउट करू इच्छिता याची खात्री आहे का?',
     },
   };
 
@@ -72,6 +87,11 @@ class AppLocalizations {
   String get punchOut => _localizedValues[locale.languageCode]!['punchOut']!;
   String get selectLanguage => _localizedValues[locale.languageCode]!['selectLanguage']!;
   String get cancel => _localizedValues[locale.languageCode]!['cancel']!;
+  String get menu => _localizedValues[locale.languageCode]!['menu']!;
+  String get attendanceCalendar => _localizedValues[locale.languageCode]!['attendanceCalendar']!;
+  String get attendanceHistory => _localizedValues[locale.languageCode]!['attendanceHistory']!;
+  String get settings => _localizedValues[locale.languageCode]!['settings']!;
+  String get logoutConfirm => _localizedValues[locale.languageCode]!['logoutConfirm']!;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

@@ -1,3 +1,5 @@
+import 'package:contractor_app/ui_screens/menu_screens/navbar.dart';
+import 'package:contractor_app/ui_screens/menu_screens/navbar2.dart';
 import 'package:flutter/material.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -6,6 +8,11 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Color(0xFFE85426),
+        title: Text('Profile'),
+      ),
+      bottomNavigationBar: Navbar2(),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -13,7 +20,9 @@ class ProfilePage extends StatelessWidget {
             // Profile Picture
             CircleAvatar(
               radius: 50,
-              backgroundImage: AssetImage('assets/images/emp.png'), // Replace with NetworkImage if needed
+              backgroundImage: AssetImage(
+                'assets/images/emp.png',
+              ), // Replace with NetworkImage if needed
               backgroundColor: Colors.grey[200],
             ),
             const SizedBox(height: 24),
@@ -57,7 +66,10 @@ class ProfilePage extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(width: 100, child: Text(title, style: const TextStyle(fontSize: 14))),
+          SizedBox(
+            width: 100,
+            child: Text(title, style: const TextStyle(fontSize: 14)),
+          ),
           const Text(":", style: TextStyle(fontSize: 14)),
           const SizedBox(width: 8),
           Expanded(
