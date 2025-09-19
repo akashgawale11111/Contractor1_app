@@ -28,7 +28,7 @@ class _ProfileState extends State<Profile> {
         title: const Text('Profile', style: TextStyle(fontFamily: 'Roboto')),
         centerTitle: true,
       ),
-      bottomNavigationBar: Navbar(),
+     // bottomNavigationBar: Navbar(),
       body: SingleChildScrollView(
         child: Center(
           child: Padding(
