@@ -3,9 +3,7 @@ import 'dart:io';
 import 'package:contractor_app/language/lib/l10n/app_localizations.dart';
 import 'package:contractor_app/language/lib/l10n/language_provider.dart';
 import 'package:contractor_app/ui_screens/authentication/login/loginscreen.dart';
-import 'package:contractor_app/ui_screens/home/face_detection.dart/face_detection.dart';
 import 'package:contractor_app/ui_screens/home/map_screen/map2.dart';
-import 'package:contractor_app/ui_screens/home/map_screen/map_screen.dart';
 import 'package:contractor_app/ui_screens/menu_screens/attendance_calendar.dart';
 import 'package:contractor_app/ui_screens/menu_screens/attendance_history.dart';
 import 'package:contractor_app/ui_screens/menu_screens/navbar.dart';
@@ -152,7 +150,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   Future<bool> _onWillPop() async {
     exit(0);
-    return false;
   }
 
   @override
