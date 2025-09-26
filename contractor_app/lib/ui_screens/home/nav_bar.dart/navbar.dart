@@ -15,7 +15,7 @@ class _NavbarState extends State<Navbar> {
   // तुझ्या navigation ची screens list
   final List<Widget> _screens = [
     HomeScreen(selectedLanguageCode: 'en', onLanguageChanged: (code) {}),
-    Profile(),
+   // ProfileScreen(labour: Labour(id: 0, name: '', email: '', phone: '', address: '', uid: '', profileImage: '')),
   ];
 
   @override
@@ -106,10 +106,6 @@ class _NavbarState extends State<Navbar> {
     );
   }
 }
-
-
-
-
 
 
 class StackDashboard extends StatefulWidget {

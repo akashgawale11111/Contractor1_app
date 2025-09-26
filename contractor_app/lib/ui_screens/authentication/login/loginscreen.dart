@@ -1,100 +1,112 @@
+import 'dart:convert';
+
 import 'package:contractor_app/custom_Widgets/customButton.dart';
 import 'package:contractor_app/custom_Widgets/customPasswordField.dart';
 import 'package:contractor_app/custom_Widgets/customTextField.dart';
-import 'package:contractor_app/ui_screens/authentication/phoneNumber/phoneNumberScreen.dart';
-import 'package:contractor_app/ui_screens/authentication/sign_up/sing_up.dart';
+import 'package:contractor_app/models/user_model.dart';
+import 'package:contractor_app/riverpod/labour_provider.dart';
+import 'package:contractor_app/ui_screens/home/homeScreen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:http/http.dart' as http;
 
-class LoginScreen extends StatefulWidget {
+class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  ConsumerState<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
-  final phoneController = TextEditingController();
-  final passwordController = TextEditingController();
+class _LoginScreenState extends ConsumerState<LoginScreen> {
+  final TextEditingController uidController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  bool loading = false;
+
+  Future<void> loginUser() async {
+    setState(() => loading = true);
+
+    try {
+      var request = http.MultipartRequest(
+        'POST',
+        Uri.parse("http://admin.mmprecise.com/api/login"),
+      );
+      request.fields['labour_id'] = uidController.text.trim();
+      request.fields['password'] = passwordController.text.trim();
+
+      var response = await request.send();
+      var responseBody = await response.stream.bytesToString();
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(responseBody);
+        UserModel userModel = UserModel.fromJson(data);
+
+        if (userModel.labour != null) {
+          ref.read(labourProvider.notifier).state = userModel.labour;
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const HomeScreen(),
+            ),
+          );
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("Invalid response: No labour data")),
+          );
+        }
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Login failed: ${response.reasonPhrase}")),
+        );
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Error: $e")),
+      );
+    }
+
+    setState(() => loading = false);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 24),
+          padding: const EdgeInsets.symmetric(horizontal: 24),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Image.asset(
                   'assets/images/mmprecise.png',
                   height: 100,
                 ), // Replace with your logo
-                SizedBox(height: 20),
-                Text(
+                const SizedBox(height: 20),
+                const Text(
                   'Log In for exclusive designs, deals & quick checkout.',
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 16),
                 ),
-                SizedBox(height: 20),
-
+                const SizedBox(height: 20),
                 CustomTextField(
-                  controller: phoneController,
+                  controller: uidController,
                   hintText: 'Phone Number',
                   keyboardType: TextInputType.phone,
                 ),
-
                 CustomPasswordField(
                   controller: passwordController,
                   hintText: 'Enter Password',
                 ),
-
-                SizedBox(height: 5),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: TextButton(
-                    onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (_)=> PhoneNumberScreen()));
-                    },
-                    child: const Text(
-                      'Forget Password?',
-                      style: TextStyle(
-                        color: Colors.black87,
-                        
-                        fontWeight: FontWeight.bold,
+                const SizedBox(height: 5),
+                const SizedBox(height: 5),
+                const SizedBox(height: 20),
+                loading
+                    ? const CircularProgressIndicator()
+                    : CustomButton(
+                        onPressed: loginUser,
+                        text: 'Log In',
                       ),
-                    ),
-                  ),
-                ),
-                SizedBox(height: 5),
-                CustomButton(
-                  text: 'LOGIN',
-                  onPressed: () {
-                    // Handle sign-up
-                  },
-                ),
-
-                SizedBox(height: 10),
-                TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (_) => SignUpScreen()),
-                    );
-                  },
-                  child: Text.rich(
-                    TextSpan(
-                      text: 'Don’t have an account? ',style: TextStyle(color: Color.fromARGB(255, 56, 56, 56)),
-                      children: [
-                        TextSpan(
-                          text: 'Register',
-                          style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
               ],
             ),
           ),

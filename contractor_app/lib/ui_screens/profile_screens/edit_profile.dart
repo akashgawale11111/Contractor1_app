@@ -1,4 +1,4 @@
-import 'package:contractor_app/ui_screens/menu_screens/navbar.dart';
+import 'package:contractor_app/ui_screens/home/nav_bar.dart/navbar.dart';
 import 'package:flutter/material.dart';
 
 class EditProfile extends StatefulWidget {

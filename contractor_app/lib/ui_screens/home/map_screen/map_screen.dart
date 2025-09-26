@@ -1,3 +1,4 @@
+import 'package:contractor_app/ui_screens/home/face_detection.dart/aws_facerecognition.dart';
 import 'package:contractor_app/ui_screens/home/face_detection.dart/face_detection.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -297,7 +298,7 @@ class _MapScreenState extends State<MapScreen> {
                 ),
               ),
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (_) => FaceVerificationScreen()));
+                Navigator.push(context, MaterialPageRoute(builder: (_) => FaceCompareAWS()));
                 // ScaffoldMessenger.of(context).showSnackBar(
                 //   SnackBar(content: Text("Location Saved: $_address")),
                 // );

@@ -169,13 +169,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 CustomButton(
                   text: 'SIGN UP',
                   onPressed: () {
-                    // Replace the current screen with MainPage
-                    // Navigator.pushReplacement(
-                    //   context,
-                    //   MaterialPageRoute(builder: (_) => const MainPage()),
-                    // );
-
-                    Navigator.push(
+                    // Replace the current screen with HomeScreen so the user can't go back.
+                    Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
                         builder:

@@ -2,16 +2,17 @@ import 'package:contractor_app/language/lib/l10n/app_localizations.dart';
 import 'package:contractor_app/language/lib/l10n/language_provider.dart';
 import 'package:contractor_app/theme/app_theme.dart';
 import 'package:contractor_app/theme/theme_provider.dart';
-import 'package:contractor_app/ui_screens/home/homeScreen.dart';
-import 'package:contractor_app/ui_screens/menu_screens/navbar.dart';
 import 'package:contractor_app/ui_screens/splash_screen/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:contractor_app/utils/size_config.dart';
 
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load(fileName: ".env");
   runApp(const ProviderScope(child: MyApp()));
 }
 
@@ -53,7 +54,7 @@ class MyApp extends ConsumerWidget {
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       themeMode: themeMode,
-      home:  StackDashboard(),
+      home:  SplashScreen(),
     );
   }
 }

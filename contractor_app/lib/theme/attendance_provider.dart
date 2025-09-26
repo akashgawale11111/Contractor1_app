@@ -2,9 +2,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 
-final attendanceProvider = StateNotifierProvider<AttendanceNotifier, AttendanceState>((ref) {
-  return AttendanceNotifier();
-});
+final attendanceProvider =
+    StateNotifierProvider<AttendanceNotifier, AttendanceState>((ref) {
+      return AttendanceNotifier();
+    });
 
 class AttendanceState {
   final String location;
@@ -78,23 +79,31 @@ class AttendanceNotifier extends StateNotifier<AttendanceState> {
       }
     }
     if (permission == LocationPermission.deniedForever) {
-      throw Exception('Location permissions are permanently denied. Please enable them in settings.');
+      throw Exception(
+        'Location permissions are permanently denied. Please enable them in settings.',
+      );
     }
-    return await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    return await Geolocator.getCurrentPosition(
+      desiredAccuracy: LocationAccuracy.high,
+    );
   }
 
   Future<String> _getPlaceName(double latitude, double longitude) async {
-    List<Placemark> placemarks = await placemarkFromCoordinates(latitude, longitude);
+    List<Placemark> placemarks = await placemarkFromCoordinates(
+      latitude,
+      longitude,
+    );
     if (placemarks.isNotEmpty) {
       final place = placemarks.first;
-      List<String?> parts = [
-        place.subThoroughfare,
-        place.thoroughfare,
-        place.subLocality,
-        place.locality,
-        place.administrativeArea,
-        place.postalCode
-      ].where((part) => part != null && part.isNotEmpty).toList();
+      List<String?> parts =
+          [
+            place.subThoroughfare,
+            place.thoroughfare,
+            place.subLocality,
+            place.locality,
+            place.administrativeArea,
+            place.postalCode,
+          ].where((part) => part != null && part.isNotEmpty).toList();
       return parts.join(', ');
     }
     return 'Unknown location';

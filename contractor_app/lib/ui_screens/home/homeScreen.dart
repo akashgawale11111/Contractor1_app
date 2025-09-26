@@ -3,11 +3,13 @@ import 'dart:io';
 import 'package:contractor_app/language/lib/l10n/app_localizations.dart';
 import 'package:contractor_app/language/lib/l10n/language_provider.dart';
 import 'package:contractor_app/ui_screens/authentication/login/loginscreen.dart';
-import 'package:contractor_app/ui_screens/home/map_screen/map2.dart';
-import 'package:contractor_app/ui_screens/menu_screens/attendance_calendar.dart';
-import 'package:contractor_app/ui_screens/menu_screens/attendance_history.dart';
-import 'package:contractor_app/ui_screens/menu_screens/navbar.dart';
-import 'package:contractor_app/ui_screens/menu_screens/payment_history.dart';
+import 'package:contractor_app/ui_screens/home/map_screen/map_screen.dart';
+import 'package:contractor_app/ui_screens/home/nav_bar.dart/navbar3.dart';
+import 'package:contractor_app/ui_screens/menu_bar/attendance_calendar.dart';
+import 'package:contractor_app/ui_screens/menu_bar/attendance_history.dart';
+import 'package:contractor_app/ui_screens/home/nav_bar.dart/navbar.dart';
+import 'package:contractor_app/ui_screens/home/nav_bar.dart/navbar2.dart';
+import 'package:contractor_app/ui_screens/menu_bar/payment_history.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -130,6 +132,7 @@ class HomeScreen extends ConsumerStatefulWidget {
 class _HomeScreenState extends ConsumerState<HomeScreen> {
   bool _isPunchedIn = false;
   bool _isPunchedOut = false;
+  //int _currentIndex = 0;
 
   final Map<String, String> languageMap = const {
     'English': 'en',
@@ -177,7 +180,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               ),
         ),
       ),
-      // bottomNavigationBar: Navbar(),
+       bottomNavigationBar: Navbar2(),
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,

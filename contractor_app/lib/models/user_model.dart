@@ -1,64 +1,96 @@
-enum Post { head, superwiser, employe }
-
+// ======== MODELS ========
 class UserModel {
-  final String uid;
-  final String fullName;
-  final String phoneNumber;
-  final String gender;
-  final int dob;
-  final String imageUrl;
-  final String post;
-  UserModel({
-    required this.uid,
-    required this.fullName,
-    required this.phoneNumber,
-    required this.gender,
-    required this.dob,
-    required this.imageUrl,
-    required this.post,
-  });
+  bool? status;
+  int? statusCode;
+  String? message;
+  Labour? labour;
 
-  UserModel copyWith({
-    String? uid,
-    String? fullName,
-    String? phoneNumber,
-    String? gender,
-    int? dob,
-    String? imageUrl,
-    String? post,
-  }) {
-    return UserModel(
-      uid: uid ?? this.uid,
-      fullName: fullName ?? this.fullName,
-      phoneNumber: phoneNumber ?? this.phoneNumber,
-      gender: gender ?? this.gender,
-      dob: dob ?? this.dob,
-      imageUrl: imageUrl ?? this.imageUrl,
-      post: post ?? this.post,
-    );
+  UserModel({this.status, this.statusCode, this.message, this.labour});
+
+  UserModel.fromJson(Map<String, dynamic> json) {
+    status = json['status'];
+    statusCode = json['status_code'];
+    message = json['message'];
+    labour = json['labour'] != null ? Labour.fromJson(json['labour']) : null;
   }
+}
 
-  // factory UserModel.fromFirestore(DocumentSnapshot doc) {
-  //   final data = doc.data() as Map<String, dynamic>;
-  //   return UserModel(
-  //     uid: doc.id,
-  //     username: data["username"] ?? "",
-  //     fullName: data["fullName"] ?? "",
-  //     email: data["email"] ?? "",
-  //     phoneNumber: data["phoneNumber"] ?? "",
-  //     fcmToken: data["fcmToken"],
-  //     blockedUsers: List<String>.from(data["blockedUsers"]),
-  //   );
-  // }
+class Labour {
+  int? id;
+  String? labourId;
+  String? firstName;
+  String? lastName;
+  String? email;
+  String? phoneNumber;
+  int? age;
+  String? gender;
+  String? dateOfBirth;
+  String? address;
+  String? city;
+  String? state;
+  String? pincode;
+  String? photograph;
+  String? aadharNumber;
+  String? panCardNumber;
+  String? governmentRegistrationNumber;
+  String? skillLevel;
+  String? specialization;
+  String? dailyWage;
+  String? status;
+  String? createdAt;
+  String? updatedAt;
+  String? imageUrl;
 
-  Map<String, dynamic> toMap() {
-    return {
-      'fullName': fullName,
-      'phoneNumber': phoneNumber,
-      'gender': gender,
-      'dob': dob,
-      'imageUrl': imageUrl,
-      'post': post,
-    };
+  Labour(
+      {this.id,
+      this.labourId,
+      this.firstName,
+      this.lastName,
+      this.email,
+      this.phoneNumber,
+      this.age,
+      this.gender,
+      this.dateOfBirth,
+      this.address,
+      this.city,
+      this.state,
+      this.pincode,
+      this.photograph,
+      this.aadharNumber,
+      this.panCardNumber,
+      this.governmentRegistrationNumber,
+      this.skillLevel,
+      this.specialization,
+      this.dailyWage,
+      this.status,
+      this.createdAt,
+      this.updatedAt,
+      this.imageUrl});
+
+  Labour.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    labourId = json['labour_id'];
+    firstName = json['first_name'];
+    lastName = json['last_name'];
+    email = json['email'];
+    phoneNumber = json['phone_number'];
+    age = json['age'];
+    gender = json['gender'];
+    dateOfBirth = json['date_of_birth'];
+    address = json['address'];
+    city = json['city'];
+    state = json['state'];
+    pincode = json['pincode'];
+    photograph = json['photograph'];
+    aadharNumber = json['aadhar_number'];
+    panCardNumber = json['pan_card_number'];
+    governmentRegistrationNumber = json['government_registration_number'];
+    skillLevel = json['skill_level'];
+    specialization = json['specialization'];
+    dailyWage = json['daily_wage'];
+    status = json['status'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+    imageUrl = json['image_url'];
   }
 }

@@ -1,22 +1,16 @@
-// import 'package:construction/Screens/Components/Home.dart';
-// import 'package:construction/Screens/Components/Profile.dart';
+import 'package:contractor_app/riverpod/labour_provider.dart';
 import 'package:contractor_app/ui_screens/home/homeScreen.dart';
 import 'package:contractor_app/ui_screens/profile_screens/profile_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class Navbar2 extends StatefulWidget {
+class Navbar2 extends ConsumerWidget {
   const Navbar2({super.key});
 
   @override
-  State<Navbar2> createState() => _NavbarState();
-}
-
-class _NavbarState extends State<Navbar2> {
-  int selectedIndex = 0;
-
-  @override
-  Widget build(BuildContext context) {
-    // Remove the Scaffold and return only the navigation bar
+  Widget build(BuildContext context, WidgetRef ref) {
+    final labour = ref.watch(labourProvider);
+    int selectedIndex = 0;
     return Container(
       height: 80,
       margin: const EdgeInsets.all(8),
@@ -49,19 +43,11 @@ class _NavbarState extends State<Navbar2> {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        setState(() => selectedIndex = 1);
+                        selectedIndex = 0;
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder:
-                                (context) => HomeScreen(
-                                  selectedLanguageCode:
-                                      'en', // Provide a default or get it from context/state
-                                  onLanguageChanged:
-                                      (
-                                        code,
-                                      ) {}, // Provide an empty function or a real one
-                                ),
+                            builder: (context) => const HomeScreen(),
                           ),
                         );
                       },
@@ -79,11 +65,15 @@ class _NavbarState extends State<Navbar2> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        setState(() => selectedIndex = 1);
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => Profile()),
-                        );
+                        if (labour != null) {
+                          selectedIndex = 1;
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ProfileScreen(labour: labour),
+                            ),
+                          );
+                        }
                       },
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,

@@ -14,13 +14,16 @@ class AppDrawer extends ConsumerWidget {
         padding: EdgeInsets.zero,
         children: <Widget>[
           const DrawerHeader(
-            decoration: BoxDecoration(
-              color: Colors.blue,
+            decoration: BoxDecoration(color: Colors.blue),
+            child: Text(
+              'Settings',
+              style: TextStyle(color: Colors.white, fontSize: 24),
             ),
-            child: Text('Settings', style: TextStyle(color: Colors.white, fontSize: 24)),
           ),
           ListTile(
-            leading: Icon(themeMode == ThemeMode.dark ? Icons.dark_mode : Icons.light_mode),
+            leading: Icon(
+              themeMode == ThemeMode.dark ? Icons.dark_mode : Icons.light_mode,
+            ),
             title: const Text('Toggle Theme'),
             onTap: () => ref.read(themeProvider.notifier).toggleTheme(),
           ),

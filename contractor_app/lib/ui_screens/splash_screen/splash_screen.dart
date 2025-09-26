@@ -1,3 +1,4 @@
+import 'package:contractor_app/ui_screens/authentication/login/loginscreen.dart';
 import 'package:contractor_app/ui_screens/authentication/sign_up/sing_up.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -21,7 +22,7 @@ class SplashScreen extends HookWidget {
       if (!context.mounted) return;
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (_) => const SignUpScreen()),
+        MaterialPageRoute(builder: (_) => const LoginScreen()),
       );
     }
 
